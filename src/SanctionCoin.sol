@@ -23,14 +23,19 @@ contract SanctionCoin is ERC20 {
         _mint(to, amount);
     }
 
-    function give(address to, uint256 amount) public {
+    function transfer(address to, uint256 value) public override returns (bool) {
         require(banned[msg.sender] == false, "Sender account is banned");
         require(banned[to] == false, "Receiver account is banned");
-        require(balanceOf(msg.sender) >= amount);
-        transfer(to, amount);
+        return super.transfer(to, value);
     }
 
-    function ban(address account) public {
+    function transferFrom(address from, address to, uint256 value) public override returns (bool) {
+        require(banned[msg.sender] == false, "Sender account is banned");
+        require(banned[to] == false, "Receiver account is banned");
+        return super.transferFrom(from, to, value);
+    }
+
+    function banAccount(address account) public {
         require(msg.sender == admin, "Only admin can ban accounts");
         require(account != admin, "Admin cannot be banned");
         require(banned[account] == false, "Account already banned");
@@ -38,7 +43,7 @@ contract SanctionCoin is ERC20 {
         emit AccountBanned(account);
     }
 
-    function unban(address account) public {
+    function unbanAccount(address account) public {
         require(msg.sender == admin, "Only admin can ban accounts");
         require(account != admin, "Admin cannot be banned");
         require(banned[account] == true, "Account is not banned");
