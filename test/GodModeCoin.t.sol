@@ -23,15 +23,13 @@ contract GodModeCoinTest is Test {
     }
 
     function test_UnauthorizedMinting() public {
-        vm.expectRevert(bytes("Only god can mint coins."));
+        vm.expectRevert("Only god can mint coins.");
         vm.prank(account);
         coin.mint(account, 1000);
     }
 
     function test_GodMintingCoinsForHimselfHerself() public {
-        vm.expectRevert(
-            bytes("God can only receive coins through a tithe.  God cannot mint coins for himself/herself.")
-        );
+        vm.expectRevert("God can only receive coins through a tithe.  God cannot mint coins for himself/herself.");
         vm.prank(god);
         coin.mint(god, 1000);
     }

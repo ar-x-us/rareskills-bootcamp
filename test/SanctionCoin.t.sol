@@ -23,7 +23,7 @@ contract SanctionCoinTest is Test {
     }
 
     function test_UnauthorizedMinting() public {
-        vm.expectRevert(bytes("Only admin can mint coins."));
+        vm.expectRevert("Only admin can mint coins.");
         vm.prank(account);
         coin.mint(account, 1000);
     }
@@ -31,7 +31,7 @@ contract SanctionCoinTest is Test {
     function test_RevertOnSanctionedMinting() public {
         vm.prank(admin);
         coin.sanction(account);
-        vm.expectRevert(bytes("Receiver account is sanctioned."));
+        vm.expectRevert("Receiver account is sanctioned.");
         vm.prank(admin);
         coin.mint(account, 1000);
     }
@@ -51,7 +51,7 @@ contract SanctionCoinTest is Test {
         assertEq(coin.balanceOf(sender), 1000);
         vm.prank(admin);
         coin.sanction(sender);
-        vm.expectRevert("Sender account is sanctioned");
+        vm.expectRevert("Sender account is sanctioned.");
         vm.prank(sender);
         coin.transfer(receiver, 100);
     }
@@ -62,7 +62,7 @@ contract SanctionCoinTest is Test {
         assertEq(coin.balanceOf(sender), 1000);
         vm.prank(admin);
         coin.sanction(receiver);
-        vm.expectRevert("Receiver account is sanctioned");
+        vm.expectRevert("Receiver account is sanctioned.");
         vm.prank(sender);
         coin.transfer(receiver, 100);
     }
@@ -85,7 +85,7 @@ contract SanctionCoinTest is Test {
         coin.approve(account, 1000);
         vm.prank(admin);
         coin.sanction(sender);
-        vm.expectRevert(bytes("Sender account is sanctioned."));
+        vm.expectRevert("Sender account is sanctioned.");
         vm.prank(account);
         coin.transferFrom(sender, receiver, 100);
     }
@@ -97,7 +97,7 @@ contract SanctionCoinTest is Test {
         coin.approve(account, 1000);
         vm.prank(admin);
         coin.sanction(receiver);
-        vm.expectRevert(bytes("Receiver account is sanctioned."));
+        vm.expectRevert("Receiver account is sanctioned.");
         vm.prank(account);
         coin.transferFrom(sender, receiver, 100);
     }
@@ -111,7 +111,7 @@ contract SanctionCoinTest is Test {
     function test_DoubleSanctioning() public {
         vm.prank(admin);
         coin.sanction(sender);
-        vm.expectRevert(bytes("Sanctioned account cannot be sanctioned."));
+        vm.expectRevert("Sanctioned account cannot be sanctioned.");
         vm.prank(admin);
         coin.sanction(sender);
     }
@@ -130,19 +130,19 @@ contract SanctionCoinTest is Test {
         coin.sanction(sender);
         vm.prank(admin);
         coin.unsanction(sender);
-        vm.expectRevert(bytes("Unsanctioned account cannot be unsanctioned."));
+        vm.expectRevert("Unsanctioned account cannot be unsanctioned.");
         vm.prank(admin);
         coin.unsanction(sender);
     }
 
     function test_UnauthorizedSanctioning() public {
-        vm.expectRevert(bytes("Only admin can sanction accounts."));
+        vm.expectRevert("Only admin can sanction accounts.");
         vm.prank(account);
         coin.sanction(sender);
     }
 
     function test_SanctioningAdmin() public {
-        vm.expectRevert(bytes("Admin cannot be sanctioned."));
+        vm.expectRevert("Admin cannot be sanctioned.");
         vm.prank(admin);
         coin.sanction(admin);
     }
