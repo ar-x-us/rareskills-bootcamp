@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {GodModeCoin} from "src/GodModeCoin.sol";
+import {GodModeCoin} from "src/week-01/GodModeCoin.sol";
 
 contract GodModeCoinTest is Test {
     GodModeCoin public coin;

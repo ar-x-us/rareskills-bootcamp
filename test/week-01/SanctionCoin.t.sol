@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {SanctionCoin} from "src/SanctionCoin.sol";
+import {SanctionCoin} from "src/week-01/SanctionCoin.sol";
 
 contract SanctionCoinTest is Test {
     SanctionCoin public coin;
