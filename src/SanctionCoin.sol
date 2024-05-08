@@ -2,7 +2,6 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
 
 /// @title ERC20 Sanction Coin
 /// @dev This fungible token allows the admin (the person that deploys the coin) to
@@ -25,8 +24,8 @@ contract SanctionCoin is ERC20 {
     /// @dev Accounts that are sanctioned are not able to receive coins.
     /// Only admin account can mint coins.
     function mint(address to, uint256 amount) public {
-        require(msg.sender == admin, "Only admin can mint");
-        require(sanctioned[to] == false, "Receiver account is sanctioned");
+        require(msg.sender == admin, "Only admin can mint coins.");
+        require(sanctioned[to] == false, "Receiver account is sanctioned.");
         super._mint(to, amount);
     }
 
@@ -36,8 +35,8 @@ contract SanctionCoin is ERC20 {
     /// @return success Returns true if transfer is successful.
     /// @dev Both sender and receiving accounts must not be sanctioned.
     function transfer(address to, uint256 amount) public override returns (bool success) {
-        require(sanctioned[msg.sender] == false, "Sender account is sanctioned");
-        require(sanctioned[to] == false, "Receiver account is sanctioned");
+        require(sanctioned[msg.sender] == false, "Sender account is sanctioned.");
+        require(sanctioned[to] == false, "Receiver account is sanctioned.");
         return super.transfer(to, amount);
     }
 
@@ -48,8 +47,8 @@ contract SanctionCoin is ERC20 {
     /// @return success Returns true if transfer is successful.
     /// @dev Both sender and receiving accounts must not be sanctioned.
     function transferFrom(address from, address to, uint256 amount) public override returns (bool success) {
-        require(sanctioned[from] == false, "Sender account is sanctioned");
-        require(sanctioned[to] == false, "Receiver account is sanctioned");
+        require(sanctioned[from] == false, "Sender account is sanctioned.");
+        require(sanctioned[to] == false, "Receiver account is sanctioned.");
         return super.transferFrom(from, to, amount);
     }
 
@@ -58,9 +57,9 @@ contract SanctionCoin is ERC20 {
     /// @dev Account to be sanctioned cannot be sanctioned again.
     /// Only admin can sanction an account.
     function sanction(address account) public {
-        require(msg.sender == admin, "Only admin can sanction accounts");
-        require(account != admin, "Admin cannot be sanctioned");
-        require(sanctioned[account] == false, "Account already sanctioned");
+        require(msg.sender == admin, "Only admin can sanction accounts.");
+        require(account != admin, "Admin cannot be sanctioned.");
+        require(sanctioned[account] == false, "Sanctioned account cannot be sanctioned.");
         sanctioned[account] = true;
         emit AccountSanctioned(account);
     }
@@ -70,9 +69,9 @@ contract SanctionCoin is ERC20 {
     /// @dev Account to be unsanctioned cannot be unsanctioned again.
     /// Only admin can sanction an account.
     function unsanction(address account) public {
-        require(msg.sender == admin, "Only admin can sanction accounts");
-        require(account != admin, "Admin cannot be sanctioned");
-        require(sanctioned[account] == true, "Account is not sanctioned");
+        require(msg.sender == admin, "Only admin can sanction accounts.");
+        require(account != admin, "Admin cannot be sanctioned.");
+        require(sanctioned[account] == true, "Unsanctioned account cannot be unsanctioned.");
         sanctioned[account] = false;
         emit AccountUnsanctioned(account);
     }
