@@ -10,7 +10,7 @@ contract GodModeCoin is ERC20 {
     address god;
 
     /// @dev Assigns deployer of the contract as the admin of the contract.
-    constructor(address theOneAndOnlyGod) ERC20("GMC", "GodModeCoin") {
+    constructor(address theOneAndOnlyGod) ERC20("GodModeCoin", "GMC") {
         god = theOneAndOnlyGod;
     }
 

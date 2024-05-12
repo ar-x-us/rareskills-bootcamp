@@ -14,7 +14,7 @@ contract SanctionCoin is ERC20 {
     event AccountUnsanctioned(address account);
 
     /// @dev Assigns deployer of the contract as the admin of the contract.
-    constructor() ERC20("SC", "SanctionCoin") {
+    constructor() ERC20("SanctionCoin", "SC") {
         admin = msg.sender;
     }
 

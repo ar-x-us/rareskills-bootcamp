@@ -20,7 +20,7 @@ contract BondingCurveToken is ERC20 {
 
     // bonding curve is linear, reserve ratio is 50% = 1/2
 
-    constructor() ERC20("BCT", "BondingCurveToken") {
+    constructor() ERC20("BondingCurveToken", "BCT") {
         // supply must be initialized to non-zero value
         // admin receives a single token to seed the bonding curve, but can never sell the token
         admin = msg.sender;
