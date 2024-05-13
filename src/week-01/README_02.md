@@ -1,0 +1,4 @@
+## Why does the SafeERC20 program exist and when should it be used?
+
+- SafeERC20 is a wrapper around ERC20 function calls that enhances the safety of interactions with external ERC20 tokens within your contracts.  SafeERC20 improves upon the error handling of the wrapped function calls by checking the return values i.e. it offers support for non-standard ERC20 tokens lacking boolean return values.  If failures occur, SafeERC20 triggers a transaction revert, ensuring the integrity of token operations.   In addition, it has additional helpers for adjusting allowances to mitigate front-running attacks that may exploit vulnerabilities in the conventional `approve()` method of standard ERC20 tokens.
+- SafeERC20 should be used newly created smart contracts, especially when interacting with external or foreign ERC20 tokens. Its usage is crucial to ensure the security and reliability of token operations within contracts.
